@@ -7,7 +7,9 @@ function Ads({gamUser, id, units}) {
     if(slot) {
       console.log("ads stored slot: ", slot.getSlotId().getDomId());
     }
+
     let ad = units.filter((entry) => { return entry.id === id; })[0];
+
     if(typeof ad !== 'undefined'){
       const path = ad.unit;
       const size = ad.sizes; 
@@ -49,22 +51,21 @@ function Ads({gamUser, id, units}) {
 
           console.log('ads displaying id ', id)
           window.googletag.display(id);
-          window.googletag.pubads().refresh();
+          //window.googletag.pubads().refresh();
         }else {
           window.googletag.pubads().refresh();
         }
-        
-        slot = definedSlot;
-      }); 
+        slot = definedSlot; 
+      });
     }
     return () => {
       const slotArr = window.googletag.pubads().getSlots();
       for(let i=0; i< slotArr.length; i++){
         if(slotArr[i].getSlotId().getDomId() == id) {
           console.log('ads destroying:', slotArr[i].getSlotId().getDomId())
-          console.log(window.googletag.destroySlots(slotArr[i]));
+          console.log(window.googletag.destroySlots([slotArr[i]]));
           console.log('clear=====');
-          console.log(window.googletag.pubads().clear(slotArr[i]));
+          //console.log(window.googletag.pubads().clear([slotArr[i]]));
           break;
         }
       }
@@ -75,7 +76,7 @@ function Ads({gamUser, id, units}) {
       //   window.googletag.pubads().clear();
       // }
     }
-  });
+  }, [id, units, gamUser]);
 
   return (
     <div id={id} />

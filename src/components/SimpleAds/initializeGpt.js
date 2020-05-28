@@ -11,7 +11,7 @@ export default () => {
     window.googletag.cmd.push(() => {
       window.googletag.destroySlots();
       window.googletag.pubads().enableSingleRequest();
-      window.googletag.pubads().disableInitialLoad();
+      //window.googletag.pubads().disableInitialLoad();
       window.googletag.enableServices();
     });
   }
