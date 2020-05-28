@@ -5,13 +5,9 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import Foo from './screens/Foo';
-import Bar from './screens/Bar';
-import FooBar from './screens/FooBar';
-import Test from './screens/Test';
-import Hook from './screens/Hook';
-import HookTwo from './screens/Hook2';
+
 import Example from './screens/Example/index';
+import ExampleTwo from './screens/ExampleTwo/index';
 
 export default function App() {
   return (
@@ -20,25 +16,10 @@ export default function App() {
         <nav>
           <ul>
             <li>
-              <Link to="/">Foo</Link>
-            </li>
-            <li>
-              <Link to="/bar">Bar</Link>
-            </li>
-            <li>
-              <Link to="/foobar">FooBar</Link>
-            </li>
-            <li>
-              <Link to="/test">Test</Link>
-            </li>
-            <li>
-              <Link to="/hook">Hook</Link>
-            </li>
-            <li>
-              <Link to="/hook2">Hook2</Link>
-            </li>
-            <li>
               <Link to="/example">Example</Link>
+            </li>
+            <li>
+              <Link to="/example2">Example 2</Link>
             </li>
           </ul>
         </nav>
@@ -46,26 +27,14 @@ export default function App() {
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-          <Route path="/test">
-            <Test />
-          </Route>
-          <Route path="/bar">
-            <Bar />
-          </Route>
-          <Route path="/foobar">
-            <FooBar />
-          </Route>
-          <Route path="/hook">
-            <Hook />
-          </Route>
-          <Route path="/hook2">
-            <HookTwo />
-          </Route>
           <Route path="/example">
             <Example />
           </Route>
+          <Route path="/example2">
+            <ExampleTwo />
+          </Route>
           <Route path="/">
-            <Foo />
+            <div>no ads</div>
           </Route>
         </Switch>
       </div>

@@ -10,17 +10,17 @@ const gamUser = {
   age: 55
 };
 
-function Example() {
+function ExampleTwo() {
   const units = defineSlots(adUnits, gamUser);
   initializeGpt();
 
   return (
     <div className="App">
       test
-      <Ads id='example-a' gamUser={gamUser} units={units} />
-      <Ads id='example-b' gamUser={gamUser} units={units} />
+      <Ads id='example2-a' gamUser={gamUser} units={units} />
+      <Ads id='example2-b' gamUser={gamUser} units={units} />
     </div>
   );
 }
 
-export default Example;
+export default ExampleTwo;

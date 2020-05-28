@@ -1,37 +1,79 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 function Ads({gamUser, id, units}) {
+  let slot;
 
   React.useEffect(() => {
+    if(slot) {
+      console.log("ads stored slot: ", slot.getSlotId().getDomId());
+    }
     let ad = units.filter((entry) => { return entry.id === id; })[0];
     if(typeof ad !== 'undefined'){
       const path = ad.unit;
       const size = ad.sizes; 
-      console.log('slot to be define', ad)
+      console.log('ads slot to be define', ad)
       
       window.googletag = window.googletag || {};
       window.googletag.cmd = window.googletag.cmd || [];
       window.googletag.cmd.push(() => {
-        console.log("slot defined ",id, path, size);
+        console.log("ads slot to be defined ",id, path, size);
 
-        let definedSlot = window.googletag.defineSlot(path, size, id);
+        let definedSlot;
 
-        definedSlot.setTargeting('ad_group', Adomik.randomAdGroup());
-        definedSlot.setTargeting('ad_h', new Date().getUTCHours().toString());
-        const entries = Object.entries(gamUser);
-        for (const [key, value] of entries) {
-          if(definedSlot) definedSlot.setTargeting(key, value);
+        let found = false;
+        const slotArr = window.googletag.pubads().getSlots();
+        for(let i=0; i< slotArr.length; i++){
+          if(slotArr[i].getSlotId().getDomId() == id) {
+            definedSlot = slotArr[i];
+            found = true;
+            break;
+          }
         }
-        if(definedSlot) definedSlot.addService(window.googletag.pubads());
-        console.log("defined id:", definedSlot.getSlotId().getId())
+
+        if(!found) definedSlot = window.googletag.defineSlot(path, size, id);
+        
+        console.log('ads definedSlot:', definedSlot)
+        console.log("ads defined id:", definedSlot.getSlotId().getId())
+
+        if(!found) {
+          definedSlot.setTargeting('ad_group', Adomik.randomAdGroup());
+          definedSlot.setTargeting('ad_h', new Date().getUTCHours().toString());
+
+          const entries = Object.entries(gamUser);
+          
+          for (const [key, value] of entries) {
+            definedSlot.setTargeting(key, value);
+          }
+          
+          definedSlot.addService(window.googletag.pubads());
+
+          console.log('ads displaying id ', id)
+          window.googletag.display(id);
+          window.googletag.pubads().refresh();
+        }else {
+          window.googletag.pubads().refresh();
+        }
+        
+        slot = definedSlot;
       }); 
-      window.googletag.cmd.push(() => {
-        window.googletag.display(id);
-      });
-      return () => {
-        window.googletag.destroySlots();
-        window.googletag.pubads().clear();
+    }
+    return () => {
+      const slotArr = window.googletag.pubads().getSlots();
+      for(let i=0; i< slotArr.length; i++){
+        if(slotArr[i].getSlotId().getDomId() == id) {
+          console.log('ads destroying:', slotArr[i].getSlotId().getDomId())
+          console.log(window.googletag.destroySlots(slotArr[i]));
+          console.log('clear=====');
+          console.log(window.googletag.pubads().clear(slotArr[i]));
+          break;
+        }
       }
+
+      // if(slot) {
+      //   console.log('ads destroying:', slot.getSlotId().getDomId())
+      //   window.googletag.destroySlots(slot);
+      //   window.googletag.pubads().clear();
+      // }
     }
   });
 
