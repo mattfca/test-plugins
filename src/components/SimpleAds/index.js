@@ -51,9 +51,9 @@ function Ads({gamUser, id, units}) {
 
           console.log('ads displaying id ', id)
           window.googletag.display(id);
-          //window.googletag.pubads().refresh();
+          window.googletag.pubads().refresh([definedSlot]);
         }else {
-          window.googletag.pubads().refresh();
+          window.googletag.pubads().refresh([definedSlot]);
         }
         slot = definedSlot; 
       });
