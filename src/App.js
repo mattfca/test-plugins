@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,6 +10,11 @@ import Example from './screens/Example/index';
 import ExampleTwo from './screens/ExampleTwo/index';
 
 export default function App() {
+  useEffect(() => {
+    // eslint-disable-next-line no-unused-expressions
+    import('./components/SimpleAds/prebid/latest');
+  }, []);
+
   return (
     <Router>
       <div>

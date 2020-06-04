@@ -9,10 +9,24 @@ export default () => {
     document.body.appendChild(script);
 
     window.googletag.cmd.push(() => {
-      window.googletag.destroySlots();
       window.googletag.pubads().enableSingleRequest();
       window.googletag.pubads().disableInitialLoad();
       window.googletag.enableServices();
+    
+      window.googletag.pubads().addEventListener(
+        'slotOnload',
+       (e) => {
+         console.log("slotOnLoad Event", e)
+        },
+      );
+      window.googletag.pubads().addEventListener(
+        'slotRequested',
+       (e) => {
+         console.log("slotRequested Event", e)
+        },
+      );
     });
+  } else {
+    //window.googletag.pubads().clear();
   }
 }

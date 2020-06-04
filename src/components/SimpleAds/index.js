@@ -1,5 +1,32 @@
 import React, {useState} from 'react';
 
+const adSettings = {
+  TIMEOUT: 300,
+  DEBUG: true,
+  ADOMIK_ENABLED: true,
+  A9_ENABLED: false,
+  A9_PUBID: '3121',
+  PBJS_ENABLED: true,
+  ONETRUST_ENABLED: true,
+  BIDDER_APPNEXUS_ENABLED: true,
+  BIDDER_APPNEXUS_PLACEMENTID: '11092385',
+  BIDDER_AOL_ENABLED: true,
+  BIDDER_AOL_PLACEMENT: '4523445',
+  BIDDER_AOL_NETWORK: '9457.1',
+  BIDDER_IX_ENABLED: true,
+  BIDDER_IX_ID: '11',
+  BIDDER_IX_SITEID: '195628',
+  BIDDER_CRITEO_ENABLED: true,
+  BIDDER_CRITEO_ZONEID: '815048',
+  BIDDER_RUBICON_ENABLED: true,
+  BIDDER_RUBICON_ACCOUNTID: '4612',
+  BIDDER_RUBICON_SITEID: '211234',
+  BIDDER_RUBICON_ZONEID: '1037942',
+  BIDDER_OPENX_ENABLED: true,
+  BIDDER_OPENX_UNIT: '539911301',
+  BIDDER_OPENX_DELDOMAIN: 'match-d.openx.net',
+}
+
 function Ads({gamUser, id, units}) {
   let slot;
 
@@ -51,15 +78,17 @@ function Ads({gamUser, id, units}) {
 
           console.log('ads displaying id ', id)
           window.googletag.display(id);
-          window.googletag.pubads().refresh([definedSlot]);
+          //window.googletag.pubads().refresh([definedSlot]);
         }else {
-          window.googletag.pubads().refresh([definedSlot]);
+          //window.googletag.pubads().refresh([definedSlot]);
         }
         slot = definedSlot; 
       });
     }
     return () => {
       const slotArr = window.googletag.pubads().getSlots();
+      console.log("THIS")
+
       for(let i=0; i< slotArr.length; i++){
         if(slotArr[i].getSlotId().getDomId() == id) {
           console.log('ads destroying:', slotArr[i].getSlotId().getDomId())
@@ -70,11 +99,11 @@ function Ads({gamUser, id, units}) {
         }
       }
 
-      // if(slot) {
-      //   console.log('ads destroying:', slot.getSlotId().getDomId())
-      //   window.googletag.destroySlots(slot);
-      //   window.googletag.pubads().clear();
-      // }
+      if(slot) {
+        console.log('slot is beying destoryed:', slot.getSlotId().getDomId())
+        // window.googletag.destroySlots(slot);
+        // window.googletag.pubads().clear();
+      }
     }
   }, [id, units, gamUser]);
 
