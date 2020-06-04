@@ -110,19 +110,6 @@ const displayAds = () => {
   window.googletag.cmd.push(() => {
     for (let i=0; i < units.length; i++){
       log("HB displayAds "+ units[i].id);
-
-      //window.googletag.display(units[i].id);
-      // window.googletag.pubads().refresh([units[i]]);
-
-      // const slotArr = window.googletag.pubads().getSlots();
-
-      // for(let i=0; i< slotArr.length; i++){
-      //   if(slotArr[i].getSlotId().getDomId() == units[i].id) {
-      //     log("HB displayAds refresh "+ slotArr[i].getSlotId().getDomId());
-      //     window.googletag.pubads().refresh([slotArr[i]])
-      //     break;
-      //   }
-      // }
     }
 
     window.googletag.pubads().refresh();
