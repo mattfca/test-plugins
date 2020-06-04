@@ -92,6 +92,8 @@ function Ads({gamUser, id, units}) {
       for(let i=0; i< slotArr.length; i++){
         if(slotArr[i].getSlotId().getDomId() == id) {
           console.log('ads destroying:', slotArr[i].getSlotId().getDomId())
+          console.log('pbjs destroying');
+          window.pbjs.removeAdUnit(slotArr[i].getAdUnitPath());
           console.log(window.googletag.destroySlots([slotArr[i]]));
           console.log('clear=====');
           //console.log(window.googletag.pubads().clear([slotArr[i]]));
